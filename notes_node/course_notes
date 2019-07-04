@@ -1,0 +1,66 @@
+What I learned:
+fs = require('fs')
+writeFileSync(filename, content) 
+appendFileSync(filename, content) - do not overwrite just append
+
+requiring files:
+    start with ./
+    own file has it's own scope and own variables
+    explicitly export stuff file
+    should share using module.exports
+
+importing npm modules:
+    initialize npm: npm init
+    install package: npm i/install <package_name>
+    validator package
+    chalk package
+    node modules generated directory
+    get back node modules: npm install
+    install global npm modules: npm i/install <package_name> -g
+    nodemon
+
+getting input from users:
+    handle via command line arguments
+    access command line arguments: process.argv (argument vector)
+
+argument parsing with Yargs:
+    npm i yargs
+    node app.js <command> --parameter="parameter content"
+    yargs.command({
+        command: '<command_name>'
+        describe: '<description>'
+        builder: { ** used like node app.js add --item="" --item2="" and accessible in argv by argv.item**
+            item: {
+                describe:
+                demandOption:
+                type:
+            },
+            item2: {
+
+            }
+        }
+        handler: <function (argv) {
+            console.log(argv.item)
+        }>
+    })
+
+    yargs.parse() ** instead of console.log(yargs.argv)
+
+
+storing data with JSON
+    JSON - string representation of an object or array
+    JSON.stringify(<object/array>) ** returns json string representation
+    JSON.parse(<JSON string>) ** returns object from json string
+
+    Step 1: Load and parse json data
+    const dataBuffer = fs.readFileSync('1-json.json') ** read contents of file
+    const dataJSON = dataBuffer.toString() ** convert buffer to JSON string
+    const personData = JSON.parse(dataJSON) ** parse JSON string to object
+
+    Step 2: Alter value of object
+    personData.name = 'Arvin'
+    personData.age = 21
+
+    Step 3: Return back to JSON string and save to file again
+    const personJSON = JSON.stringify(personData) ** return object to JSON string
+    fs.writeFileSync('1-json.json', personJSON) ** write JSON string to file
