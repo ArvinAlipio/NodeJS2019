@@ -6,8 +6,8 @@ appendFileSync(filename, content) - do not overwrite just append
 requiring files:
     start with ./
     own file has it's own scope and own variables
-    explicitly export stuff file
-    should share using module.exports
+    explicitly export stuff ffom file
+    should share using module.exports, may return single variable or object
 
 importing npm modules:
     initialize npm: npm init
@@ -49,11 +49,11 @@ argument parsing with Yargs:
 
 storing data with JSON
     JSON - string representation of an object or array
-    JSON.stringify(<object/array>) ** returns json string representation
-    JSON.parse(<JSON string>) ** returns object from json string
+    JSON.stringify(<object/array>) ** returns json string representation, object to json 
+    JSON.parse(<JSON string>) ** returns object from json string, json to object
 
-    Step 1: Load and parse json data
-    const dataBuffer = fs.readFileSync('1-json.json') ** read contents of file
+    Step 1: Load and parse json data, sequence: Number gibberish (buffer) -> JSON string (stringify) -> Usable object (parse)
+    const dataBuffer = fs.readFileSync('1-json.json') ** read contents of json file 
     const dataJSON = dataBuffer.toString() ** convert buffer to JSON string
     const personData = JSON.parse(dataJSON) ** parse JSON string to object
 
@@ -61,6 +61,6 @@ storing data with JSON
     personData.name = 'Arvin'
     personData.age = 21
 
-    Step 3: Return back to JSON string and save to file again
+    Step 3: Return back to JSON string and save to file again, sequence: Usable object -> JSON string (stringify) -> Save to file (fs.writeFileSync)
     const personJSON = JSON.stringify(personData) ** return object to JSON string
     fs.writeFileSync('1-json.json', personJSON) ** write JSON string to file
