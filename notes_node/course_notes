@@ -52,7 +52,7 @@ storing data with JSON
     JSON.stringify(<object/array>) ** returns json string representation, object to json 
     JSON.parse(<JSON string>) ** returns object from json string, json to object
 
-    Step 1: Load and parse json data, sequence: Number gibberish (buffer) -> JSON string (stringify) -> Usable object (parse)
+    Step 1: Load and parse json data, seque nce: Number gibberish (buffer) -> JSON string (stringify) -> Usable object (parse)
     const dataBuffer = fs.readFileSync('1-json.json') ** read contents of json file 
     const dataJSON = dataBuffer.toString() ** convert buffer to JSON string
     const personData = JSON.parse(dataJSON) ** parse JSON string to object
