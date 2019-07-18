@@ -64,3 +64,15 @@ storing data with JSON
     Step 3: Return back to JSON string and save to file again, sequence: Usable object -> JSON string (stringify) -> Save to file (fs.writeFileSync)
     const personJSON = JSON.stringify(personData) ** return object to JSON string
     fs.writeFileSync('1-json.json', personJSON) ** write JSON string to file
+
+debugging node js
+    Using console.log
+    debugger (not gonna pause program by default, will stop by adding inspect: node inspect app.js )
+    to run debugger again just type restart
+
+making HTTP requests
+    npm i request
+    darksky, mapbox
+    request({url:url, json: true}, (err, res) => {
+
+    })
