@@ -76,3 +76,51 @@ making HTTP requests
     request({url:url, json: true}, (err, res) => {
 
     })
+
+Callback function
+    At the core of asynchronous node js development
+    Passing functions as argument that you may use within the function
+    ex.
+    const geocode = (address, callback) => {
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=pk.eyJ1IjoiYWphbGlwaW8xNzk4IiwiYSI6ImNqeThqazE2cTBheGczZ3J6c3E0NzVsbjkifQ.eY_A-mJOk7Bz3HsIQRsQvA&limit=1`
+
+        request({
+            url: url,
+            json: true
+        }, (error, response) => {
+            if (error) {
+                callback('Unable to connect to location services', undefined)
+            } else if (response.body.features.length == 0) {
+                callback('Unable to find location, try another search.', undefined)
+            } else {
+                const locationData = response.body.features[0]
+                callback(undefined, {
+                    latitude: locationData.center[1],
+                    longitude: locationData.center[0],
+                    location: locationData.place_name
+                })
+            }
+        })
+    }
+
+    geocode('Manila Philippines', (error, data) => { //only 1 will have a value in error/data
+       console.log('Error', error) 
+       console.log('Data', data)
+    })
+
+Object property shorthand
+    const name = 'Arvin'
+
+    const user = {
+        name // simplified name: name
+    }
+
+Object destructuring
+    const product = {
+        label: 'Red nb'
+        price: 3
+        stock: 40
+    }
+
+    const {label, price} = product
+    console.log(label) // Red nb

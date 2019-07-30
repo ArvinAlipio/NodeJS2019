@@ -1,18 +1,24 @@
-const request = require('request')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
-const url = 'https://api.darksky.net/forecast/5a0f931f5626e61c9a61eeff0ac4af4d/37.8267,-122.4233'
+const address = process.argv[2]
 
-request({ url: url, json: true }, (error, response) => {
-    // console.log(response.body.currently)
-    const currentData = response.body.currently
-    const dailyData = response.body.daily.data[0]
-    console.log(`${dailyData.summary} It is currently ${currentData.temperature} degrees out. There is a ${currentData.precipProbability}% chance of rain`)
-})
+if (address) {
+    geocode(address, (error, {latitude, longitude, location}) => { //only 1 will have a value in error/data
+        if (error) {
+            return console.log('Error', error)
+        }
 
-const geocodeURL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoiYWphbGlwaW8xNzk4IiwiYSI6ImNqeThqazE2cTBheGczZ3J6c3E0NzVsbjkifQ.eY_A-mJOk7Bz3HsIQRsQvA&limit=1'
+        // console.log('Geocode data: ', geocodeData)
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return console.log('Error', error)
+            }
 
-request({url: geocodeURL, json: true}, (error, response) => {
-    // console.log(response.body.features[0])
-    const locationData = response.body.features[0]
-    console.log(`Lat: ${locationData.center[1]}, Long: ${locationData.center[0]}`)
-})
+            console.log('Location: ', location)
+            console.log('Forecast: ', forecastData)
+        })
+    })
+} else {
+    console.log('No location provided')
+}
